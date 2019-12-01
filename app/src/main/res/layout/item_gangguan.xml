@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="item"
+            type="com.haerul.sihandist.data.entity.Gangguan" />
+        <variable
+            name="viewModel"
+            type="com.haerul.sihandist.ui.gangguan.GangguanViewModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:onClick="@{()->viewModel.onItemClick(item)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/noPemeriksaan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel.getRef(item.g_indikasi).ref_name + ` • ` + viewModel.getRef(item.g_kelompok).ref_name}"
+                android:textColor="@color/colorTextGray4"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginEnd="@dimen/_10dp"
+                app:layout_constraintEnd_toStartOf="@+id/tingkatEmergency"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:textColorGangguan="@{viewModel.getRef(item.g_status).ref_value}"/>
+
+            <TextView
+                android:id="@+id/uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{item.g_uid}"
+                android:textColor="@color/colorTextGray2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/noPemeriksaan"
+                bind:textColorGangguan="@{viewModel.getRef(item.g_status).ref_value}"/>
+
+            <TextView
+                android:id="@+id/tanggalPeriksa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{viewModel.dateTimeFormatter(item.g_date)}"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tingkatEmergency" />
+
+            <TextView
+                android:id="@+id/tingkatEmergency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="start"
+                android:gravity="end"
+                android:paddingLeft="6dp"
+                android:paddingTop="3dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="3dp"
+                android:text="@{viewModel.getRefName(item.g_status)}"
+                android:textSize="@dimen/textMediumSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:statusViewGangguan="@{viewModel.getRef(item.g_status).ref_value}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="0.7dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/colorGray" />
+
+    </LinearLayout>
+</layout>
